@@ -1,0 +1,132 @@
+:root{
+  --green-1: #6b8e6b;
+  --green-2: #9ebc9e;
+  --sand: #efe6d6;
+  --sky: #cfeff6;
+  --brown: #bda58a;
+  --muted: #6b6b6b;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family: 'Poppins', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: #223;
+  background-color: var(--sand);
+}
+
+/* Hero / Parallax */
+.hero{
+  min-height: 70vh;
+  background-image: url('../assets/images/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* parallax effect on desktop */
+  position: relative;
+  display: flex;
+}
+.hero .overlay{
+  position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,44,18,0.45), rgba(255,255,255,0.06));backdrop-filter: blur(0.3px);
+}
+.hero .container{position:relative;z-index:2}
+
+/* Fallback when image doesn't load (or file:// restrictions) */
+.hero.fallback{background-image: linear-gradient(180deg, rgba(139,195,74,0.12), rgba(250,244,230,0.06)); background-size:cover}
+
+/* When wallpaper is applied to the body (pages without .hero) */
+body.has-wallpaper{
+  background-image: url('../assets/images/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+body.has-wallpaper::before{
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,44,18,0.45), rgba(255,255,255,0.04));
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ensure main containers render above the pseudo-overlay */
+.container, .card, main, footer{position: relative; z-index: 1}
+
+.navbar-brand{color:var(--green-1)}
+.navbar{
+  background: linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.06));
+  backdrop-filter: blur(6px);
+}
+.navbar .navbar-brand{color:#fff !important; font-weight:700}
+.nav-link{color:#fff !important; font-weight:600; text-shadow:0 1px 2px rgba(0,0,0,0.6)}
+.nav-link.btn{border-radius:30px}
+
+/* CTA button in navbar: translucent light background to stand out over dark wallpaper */
+.navbar .nav-link.btn{
+  background: rgba(255,255,255,0.12);
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.28) !important;
+  padding: .35rem .9rem;
+}
+
+/* Toggler visibility on dark backgrounds */
+.navbar-toggler{border-color: rgba(255,255,255,0.18)}
+.navbar-toggler-icon{filter: invert(1) brightness(2)}
+
+.card{border-radius:12px}
+.btn{transition:transform .18s ease, box-shadow .18s ease}
+.btn:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(34,34,34,0.08)}
+
+.avatar i{color:var(--green-1)}
+/* Avatar image styling */
+.avatar-img{width:200px;height:200px;border-radius:12px;object-fit:cover;display:block}
+
+/* Responsive tweaks */
+@media (max-width: 768px){
+  .hero{background-attachment: scroll}
+}
+
+/* Navbar state when scrolled: increase contrast and add subtle shadow */
+.navbar.scrolled{
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 8px 26px rgba(2,18,6,0.18);
+}
+
+/* subtle AOS default overrides */
+[data-aos]{transition-timing-function: cubic-bezier(.2,.8,.2,1)}
+
+footer{background:transparent}
+
+/* accessibility */
+.btn:focus{outline:2px dashed var(--green-2);outline-offset:3px}
+
+/* Frosted panel for readable blocks over wallpaper */
+.frosted{
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.95);
+}
+.frosted h2, .frosted p{color: rgba(255,255,255,0.96) !important}
+
+/* Specific: make the 'Recursos' heading and its paragraph light for readability */
+#highlights .text-center h3,
+#highlights .text-center p.text-muted{
+  color: rgba(255,255,255,0.96) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+/* Materials page: series headings should be a lighter tone (no frosted blur) */
+.materials-page h3{
+  color: rgba(255,255,255,0.92) !important;
+  font-weight:600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+}
+
+/* About page: make text blocks readable using frosted panel (already added in HTML) */
+.about-page .frosted h2,
+.about-page .frosted p,
+.about-page .frosted a{
+  color: rgba(255,255,255,0.96) !important;
+}
