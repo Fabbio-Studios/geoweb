@@ -19,6 +19,23 @@
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
 
     <link rel="stylesheet" href="css/style.css">
+    <style>
+      /* Botão flutuante de áudio ambiente */
+      #bg-audio-toggle {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 1080;
+      }
+      #bg-audio-toggle .btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top py-3">
@@ -109,9 +126,70 @@
       </div>
     </footer>
 
+    <!-- Áudio de ambiente (coloque o arquivo em assets/audio/forest-ambience.mp3) -->
+    <audio id="bg-audio" src="assets/audio/forest-ambience.mp3" loop preload="auto"></audio>
+    <div id="bg-audio-toggle">
+      <button id="bg-audio-btn" class="btn btn-light shadow" type="button" aria-pressed="false" title="Ativar som de ambiente">
+        <i id="bg-audio-icon" class="bi bi-volume-mute"></i>
+      </button>
+    </div>
+
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      (function(){
+        const audio = document.getElementById('bg-audio');
+        const btn = document.getElementById('bg-audio-btn');
+        const icon = document.getElementById('bg-audio-icon');
+        const STORAGE_KEY = 'geoweb:bg-audio:enabled';
+
+        function updateButton(enabled){
+          btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+          if(enabled) {
+            icon.className = 'bi bi-volume-up';
+            btn.classList.remove('btn-light'); btn.classList.add('btn-success');
+            btn.title = 'Desativar som de ambiente';
+          } else {
+            icon.className = 'bi bi-volume-mute';
+            btn.classList.remove('btn-success'); btn.classList.add('btn-light');
+            btn.title = 'Ativar som de ambiente';
+          }
+        }
+
+        // Inicialização: lê preferência
+        const pref = localStorage.getItem(STORAGE_KEY);
+        const enabled = pref === null ? false : pref === '1';
+        updateButton(enabled);
+
+        // Tenta reproduzir se preferido
+        if(enabled){
+          audio.play().catch(err => {
+            console.info('Autoplay bloqueado ou falha ao reproduzir áudio de fundo:', err.message || err);
+            updateButton(false);
+            localStorage.setItem(STORAGE_KEY, '0');
+          });
+        }
+
+        btn.addEventListener('click', function(){
+          const nowEnabled = btn.getAttribute('aria-pressed') === 'true';
+          if(nowEnabled){
+            audio.pause();
+            updateButton(false);
+            localStorage.setItem(STORAGE_KEY, '0');
+          } else {
+            audio.play().then(()=>{
+              updateButton(true);
+              localStorage.setItem(STORAGE_KEY, '1');
+            }).catch(err=>{
+              console.info('Não foi possível reproduzir o áudio automaticamente:', err.message || err);
+              // ainda assim atualiza visual para indicar tentativa
+              updateButton(false);
+            });
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
