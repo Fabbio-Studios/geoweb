@@ -1,96 +1,49 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aula em Dia — Planner de Geografia</title>
-    <meta name="description" content="Organize aulas, quadro, exercícios e imagens para suas turmas de Geografia." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <main class="app-shell">
-      <aside class="sidebar">
-        <div class="brand"><span class="brand-mark">✦</span><span>AULA<br /><b>EM DIA</b></span></div>
-        <div class="side-label">SEMANA 46 · NOV 2026</div>
-        <nav class="nav">
-          <button class="nav-item active" data-view="dashboard"><span>▦</span> Visão geral</button>
-          <button class="nav-item" data-view="board"><span>✎</span> Quadro</button>
-          <button class="nav-item" data-view="activities"><span>✓</span> Atividades</button>
-          <button class="nav-item" data-view="media"><span>◉</span> Imagens</button>
-        </nav>
-        <div class="sidebar-bottom">
-          <div class="side-label">ATALHOS</div>
-          <button class="shortcut" id="printBtn">↗ Exportar plano <span>⌘ P</span></button>
-          <button class="shortcut" id="resetBtn">↻ Limpar progresso</button>
-        </div>
-      </aside>
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aula em Dia — Planner de Geografia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">✦</span><span>AULA<br><b>EM DIA</b></span></div>
+    <div class="side-label">PLANNER DE GEOGRAFIA</div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="planner"><span>▦</span> Planejador</button>
+      <button class="nav-item" data-view="board"><span>✎</span> Quadro</button>
+      <button class="nav-item" data-view="activities"><span>✓</span> Exercícios</button>
+      <button class="nav-item" data-view="media"><span>◉</span> Banco de imagens</button>
+      <button class="nav-item" data-view="sources"><span>⌕</span> Fontes abertas</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="shortcut" id="exportBtn">↗ Exportar plano <span>PDF</span></button>
+      <button class="shortcut" id="resetBtn">↻ Restaurar conteúdo</button>
+    </div>
+  </aside>
+  <section class="content">
+    <header class="topbar"><div class="mobile-brand"><span class="brand-mark">✦</span> AULA EM DIA</div><div class="top-actions"><button class="icon-btn" id="helpBtn">?</button><div class="avatar">PR</div></div></header>
 
-      <section class="content">
-        <header class="topbar">
-          <div class="mobile-brand"><span class="brand-mark">✦</span> AULA EM DIA</div>
-          <div class="top-actions">
-            <button class="icon-btn" title="Notificações">♢<i></i></button>
-            <div class="avatar">PR</div>
-          </div>
-        </header>
+    <div class="view" data-panel="planner">
+      <div class="hero"><div><p class="eyebrow">PLANEJAMENTO DA SEMANA</p><h1>De conteúdo<br><span>a aula pronta.</span></h1><p class="hero-copy">Crie, edite e organize cada encontro com quadro, exercícios, materiais e referências.</p></div><div class="hero-sticker">GEOGRAFIA<br><strong id="lessonTotal">3</strong><small>AULAS PLANEJADAS</small></div></div>
+      <div class="section-heading"><div><p class="eyebrow">MINHAS AULAS</p><h2>Semana em construção</h2></div><button class="yellow-btn" id="newLessonBtn">+ nova aula</button></div>
+      <div class="planner-grid" id="lessonList"></div>
+      <div class="dashboard-lower"><div class="progress-card card"><div class="card-title-row"><div><p class="eyebrow">PROGRESSO</p><h3>Preparação da semana</h3></div><strong id="progressPercent">0%</strong></div><div class="progress-track"><span id="progressBar"></span></div><div class="progress-meta"><span id="progressLabel">0 itens concluídos</span><span>salvo neste aparelho</span></div></div><div class="tip-card card"><p class="eyebrow">COMO USAR</p><h3>Abra uma aula para editar tudo.</h3><p>O conteúdo fica salvo automaticamente no navegador.</p><button class="text-btn" id="quickStart">começar pela primeira →</button></div></div>
+    </div>
 
-        <div class="view dashboard-view" data-panel="dashboard">
-          <div class="hero">
-            <div>
-              <p class="eyebrow">BOM DIA, PROFESSORA!</p>
-              <h1>Planeje uma aula<br /><span>que fica na cabeça.</span></h1>
-              <p class="hero-copy">Seu espaço para transformar conteúdo em experiências de aprendizagem.</p>
-            </div>
-            <div class="hero-sticker">GEOGRAFIA<br /><strong>2026</strong><small>7º + 6º ANO</small></div>
-          </div>
+    <div class="view inner-view" data-panel="board" hidden><div class="page-head"><div><p class="eyebrow">MATERIAL PARA A LOUSA</p><h1>O que vai no quadro?</h1><p>Edite o roteiro, copie, imprima ou exporte sua aula.</p></div><select class="lesson-select" id="boardLessonSelect"></select></div><div class="editor-layout"><article class="board card" id="boardEditor"></article><aside class="side-stack"><div class="check-card card"><div class="card-title-row"><h3>Checklist</h3><span class="count-pill" id="checkCount"></span></div><div id="boardChecklist"></div></div><button class="yellow-btn full" id="copyBoardBtn">copiar texto do quadro</button></aside></div></div>
 
-          <div class="section-heading">
-            <div><p class="eyebrow">SEU FOCO</p><h2>Aulas desta semana</h2></div>
-            <button class="text-btn" data-view-target="dashboard">ver calendário →</button>
-          </div>
-          <div class="class-grid" id="classGrid"></div>
+    <div class="view inner-view" data-panel="activities" hidden><div class="page-head"><div><p class="eyebrow">MÃO NA MASSA</p><h1>Exercícios editáveis</h1><p>Crie questões, altere instruções e marque o que já preparou.</p></div><div><select class="lesson-select" id="activityLessonSelect"></select><button class="yellow-btn" id="newActivityBtn">+ exercício</button></div></div><div class="activity-list" id="activityList"></div></div>
 
-          <div class="dashboard-lower">
-            <div class="progress-card card">
-              <div class="card-title-row"><div><p class="eyebrow">PROGRESSO DA SEMANA</p><h3>Você está no caminho</h3></div><strong id="progressPercent">0%</strong></div>
-              <div class="progress-track"><span id="progressBar"></span></div>
-              <div class="progress-meta"><span id="progressLabel">0 de 8 itens concluídos</span><span>Meta: organizar tudo</span></div>
-              <div class="mini-stats"><div><b id="boardCount">0</b><span>no quadro</span></div><div><b id="activityCount">0</b><span>atividades</span></div><div><b id="mediaCount">0</b><span>referências</span></div></div>
-            </div>
-            <div class="tip-card card">
-              <span class="tip-icon">✹</span><p class="eyebrow">DICA DE MEDIAÇÃO</p>
-              <h3>Comece pelo que<br />a turma já sabe.</h3>
-              <p>Uma boa pergunta abre espaço para o conteúdo novo.</p>
-              <button class="yellow-btn" data-view-target="board">abrir aula →</button>
-            </div>
-          </div>
-        </div>
+    <div class="view inner-view" data-panel="media" hidden><div class="page-head"><div><p class="eyebrow">BANCO VISUAL</p><h1>Imagens para provocar</h1><p>Resultados do Openverse, catálogo aberto de mídia Creative Commons.</p></div></div><form class="search-bar" id="imageSearch"><input id="imageQuery" placeholder="Ex.: mapa-múndi, fóssil, Big Bang..."><button class="yellow-btn">buscar ↗</button></form><div class="media-note">Você pode salvar imagens, copiar o link e adicionar uma legenda à aula.</div><div class="media-grid" id="mediaGrid"><div class="empty-state"><span>◌</span><h3>Busque uma referência visual.</h3><p>Use termos em português ou inglês para ampliar os resultados.</p></div></div></div>
 
-        <div class="view inner-view" data-panel="board" hidden>
-          <div class="page-head"><div><p class="eyebrow">MATERIAL PARA A LOUSA</p><h1>O que vai no quadro?</h1><p>Escolha uma turma e tenha o roteiro essencial na mão.</p></div><div class="class-switcher" id="classSwitcher"></div></div>
-          <div class="board-layout">
-            <article class="board card" id="boardContent"></article>
-            <aside class="side-stack"><div class="check-card card"><div class="card-title-row"><h3>Checklist da aula</h3><span class="count-pill" id="checkCount">0/4</span></div><div id="boardChecklist"></div></div><div class="quote-card card">“O mapa não é o território.<br /><b>É uma forma de lê-lo.</b>”<small>— Alfred Korzybski, adaptado</small></div></aside>
-          </div>
-        </div>
-
-        <div class="view inner-view" data-panel="activities" hidden>
-          <div class="page-head"><div><p class="eyebrow">MÃO NA MASSA</p><h1>Atividades prontas</h1><p>Exercícios curtos para fechar a aula com intenção.</p></div><div class="class-switcher" id="activitySwitcher"></div></div>
-          <div class="activity-list" id="activityList"></div>
-        </div>
-
-        <div class="view inner-view" data-panel="media" hidden>
-          <div class="page-head"><div><p class="eyebrow">BANCO VISUAL</p><h1>Imagens para provocar</h1><p>Busque referências livres no Openverse e salve as melhores.</p></div></div>
-          <form class="search-bar" id="imageSearch"><input id="imageQuery" placeholder="Ex.: mapa-múndi, placas tectônicas..." /><button class="yellow-btn">buscar imagens ↗</button></form>
-          <div class="media-note">Fonte aberta: Openverse API · imagens com licença Creative Commons</div>
-          <div class="media-grid" id="mediaGrid"><div class="empty-state"><span>◌</span><h3>Uma imagem pode ser uma pergunta.</h3><p>Pesquise um termo para encontrar referências visuais para sua aula.</p></div></div>
-        </div>
-      </section>
-    </main>
-    <div class="toast" id="toast"></div>
-    <script src="app.js"></script>
-  </body>
-</html>
+    <div class="view inner-view" data-panel="sources" hidden><div class="page-head"><div><p class="eyebrow">PESQUISA ABERTA</p><h1>Fontes para preparar</h1><p>Pesquise artigos e conceitos na Wikipédia e use as fontes como apoio.</p></div></div><form class="search-bar" id="sourceSearch"><input id="sourceQuery" placeholder="Ex.: escala cartográfica, eras geológicas..."><button class="yellow-btn">pesquisar ↗</button></form><div class="source-grid" id="sourceGrid"><div class="empty-state"><span>⌕</span><h3>Qual conceito você quer revisar?</h3></div></div></div>
+  </section>
+</main>
+<dialog id="lessonDialog"><form method="dialog" id="lessonForm"><div class="dialog-head"><h2 id="lessonDialogTitle">Nova aula</h2><button value="cancel" class="close-btn">×</button></div><label>Turma<input name="className" required placeholder="Ex.: 7º A"></label><label>Data<input name="date" type="date" required></label><label>Tema<input name="topic" required placeholder="Ex.: Escala cartográfica"></label><label>Objetivo<textarea name="objective" rows="3" placeholder="O que a turma deverá compreender?"></textarea></label><div class="dialog-actions"><button value="cancel" class="ghost-btn">cancelar</button><button class="yellow-btn">salvar aula</button></div></form></dialog>
+<dialog id="activityDialog"><form method="dialog" id="activityForm"><div class="dialog-head"><h2>Novo exercício</h2><button value="cancel" class="close-btn">×</button></div><label>Título<input name="title" required placeholder="Ex.: Desafio da escala"></label><label>Enunciado<textarea name="text" rows="4" required placeholder="Escreva a instrução para os estudantes."></textarea></label><label>Formato<select name="tag"><option>individual</option><option>duplas</option><option>produção</option><option>debate</option><option>cálculo</option></select></label><div class="dialog-actions"><button value="cancel" class="ghost-btn">cancelar</button><button class="yellow-btn">adicionar</button></div></form></dialog>
+<div class="toast" id="toast"></div><script src="app.js"></script>
+</body></html>
