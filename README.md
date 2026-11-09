@@ -26,3 +26,8 @@ Tecnologias
 Licença
 
 Arquivos criados como scaffold — personalize livremente. Crédito: professor / autor do conteúdo.
+
+## Planner de aulas
+
+A aplicação de organização das aulas de Geografia está disponível em:
+https://fabbio-studios.github.io/geoweb/aula-organizer/
